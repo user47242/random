@@ -17,10 +17,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView n1,n2,n3,n4,n5,n6,ranNum,points;
-    private Button start;
-    private int attempts=0,coutplay=0;
+    private TextView ranNum,points;
+    private TextView[] numberTextViews = new TextView[6];
+        private Button start,newButton  ;
+    private int attempts=0,roundPlayed=0;
     private boolean isRunning = false;
+    private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable numGenerateRun;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,29 +30,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        n1=findViewById(R.id.textView);
-        n2=findViewById(R.id.textView2);
-        n3=findViewById(R.id.textView3);
-        n4=findViewById(R.id.textView4);
-        n5=findViewById(R.id.textView5);
-        n6=findViewById(R.id.textView6);
+        newButton = findViewById(R.id.button2);
+        numberTextViews[0] = findViewById(R.id.textView);
+        numberTextViews[1]=findViewById(R.id.textView2);
+        numberTextViews[2]=findViewById(R.id.textView3);
+        numberTextViews[3]=findViewById(R.id.textView4);
+        numberTextViews[4]=findViewById(R.id.textView5);
+        numberTextViews[5]=findViewById(R.id.textView6);
         ranNum = findViewById(R.id.textView7);
         start = findViewById(R.id.button);
         points = findViewById(R.id.points);
-        n1.setText(String.valueOf((int) (Math.random() * 39 + 1)));
-        n2.setText(String.valueOf((int) (Math.random() * 39 + 1)));
-        n3.setText(String.valueOf((int) (Math.random() * 39 + 1)));
-        n4.setText(String.valueOf((int) (Math.random() * 39 + 1)));
-        n5.setText(String.valueOf((int) (Math.random() * 39 + 1)));
-        n6.setText(String.valueOf((int) (Math.random() * 39 + 1)));
+        numberTextViews[0].setText(String.valueOf((int) (Math.random() * 39 + 1)));
+        numberTextViews[1].setText(String.valueOf((int) (Math.random() * 39 + 1)));
+        numberTextViews[2].setText(String.valueOf((int) (Math.random() * 39 + 1)));
+        numberTextViews[3].setText(String.valueOf((int) (Math.random() * 39 + 1)));
+        numberTextViews[4].setText(String.valueOf((int) (Math.random() * 39 + 1)));
+        numberTextViews[5].setText(String.valueOf((int) (Math.random() * 39 + 1)));
         ranNum.setText("0");
         points.setText("0 out of 6");
         start.setText("start");
         isRunning = false;
 
-
-        Handler handler = new Handler(Looper.getMainLooper());
 
         numGenerateRun = new Runnable() {
             @Override
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 if(isRunning){
                     int num= (int) (Math.random() * 39 + 1);
                     ranNum.setText(String.valueOf(num));
-                    handler.postDelayed(this,1000);
+                    handler.postDelayed(this,100);
                 }
             }
         };
@@ -66,74 +66,71 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             if(coutplay>=6){
-                 return;
-             }
+                if (roundPlayed >= 6) {
+                    start.setText("Play Again");
+                    start.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
+                    return;
+                }
 
                 if (!isRunning) {
                     isRunning = true;
                     start.setText("stop");
                     start.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
                     handler.post(numGenerateRun);
-                    coutplay++;
+                    roundPlayed++;
 
 
                 } else {
 
                     isRunning = false;
                     String value = ranNum.getText().toString();
-                    if (coutplay >= 6) {
-                        start.setText("Play Again");
-                        start.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));}
                     start.setText("start");
                     start.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                    roundPlayed++;
 
-                    if(n1.getText().toString().equals(value))
-                    {   attempts++;
-                        coutplay++;
-                        points.setText(attempts+" out of 6");
-                        n1.setBackgroundColor(Color.CYAN);
+
+                    for (int i = 0; i < numberTextViews.length; i++) {
+                        if (numberTextViews[i].getText().toString().equals(value) &&
+                                numberTextViews[i].getCurrentTextColor() != Color.GRAY) {
+                            attempts++;
+                            numberTextViews[i].setBackgroundColor(Color.CYAN);
+                            numberTextViews[i].setTextColor(Color.GRAY);
+                        }
+
+                        points.setText(attempts + " out of 6");
+
+
                     }
 
-                    if(n2.getText().toString().equals(value))
-                    {   attempts++;
-                        coutplay++;
-                        points.setText(attempts+" out of 6");
-                        n2.setBackgroundColor(Color.CYAN);
+                    if (roundPlayed < 6) {
+                        start.setText("Start");
+                        start.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                    } else {
+                        start.setText("Play Again");
+                        start.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
                     }
-
-                    if(n3.getText().toString().equals(value))
-                    {   attempts++;
-                        coutplay++;
-                        points.setText(attempts+" out of 6");
-                        n3.setBackgroundColor(Color.CYAN);
-                    }
-
-                    if(n4.getText().toString().equals(value))
-                    {   attempts++;
-                        coutplay++;
-                        points.setText(attempts+" out of 6");
-                        n4.setBackgroundColor(Color.CYAN);
-                    }
-
-                    if(n5.getText().toString().equals(value))
-                    {   attempts++;
-                        coutplay++;
-                        points.setText(attempts+" out of 6");
-                        n5.setBackgroundColor(Color.CYAN);
-                    }
-
-                    if(n6.getText().toString().equals(value))
-                    {   attempts++;
-                        coutplay++;
-                        points.setText(attempts+" out of 6");
-                        n6.setBackgroundColor(Color.CYAN);
-                    }
-
-                   }
                 }
-
+            }
         });
+
+       newButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if(attempts==6){
+                   attempts=0;
+                   points.setText("0 out of 6");
+                   roundPlayed=0;
+                   start.setText("start");
+                   start.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                   for (int i = 0; i < numberTextViews.length; i++) {
+                       numberTextViews[i].setText(String.valueOf((int) (Math.random() * 39 + 1)));
+                       numberTextViews[i].setBackgroundColor(Color.WHITE);
+                       numberTextViews[i].setTextColor(Color.BLACK);
+                   }
+               }
+           }
+       });
+
 
 
 
