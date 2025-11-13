@@ -1,5 +1,6 @@
 package com.example.myapplication1;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView ranNum,points;
     private TextView[] numberTextViews = new TextView[6];
-        private Button start,newButton  ;
-    private int attempts=0,roundPlayed=0;
+        private Button start,newButton,score  ;
+    private int attempts=0,roundPlayed=0,totalTrue=0,totalGames=1;
     private boolean isRunning = false;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable numGenerateRun;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         ranNum = findViewById(R.id.textView7);
         start = findViewById(R.id.button);
         points = findViewById(R.id.points);
+        score = findViewById(R.id.button3);
         numberTextViews[0].setText(String.valueOf((int) (Math.random() * 39 + 1)));
         numberTextViews[1].setText(String.valueOf((int) (Math.random() * 39 + 1)));
         numberTextViews[2].setText(String.valueOf((int) (Math.random() * 39 + 1)));
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (roundPlayed >= 6) {
+                if (roundPlayed > 6) {
                     start.setText("Play Again");
                     start.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
                     return;
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     String value = ranNum.getText().toString();
                     start.setText("start");
                     start.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
-                    roundPlayed++;
+
 
 
                     for (int i = 0; i < numberTextViews.length; i++) {
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                             attempts++;
                             numberTextViews[i].setBackgroundColor(Color.CYAN);
                             numberTextViews[i].setTextColor(Color.GRAY);
+                            totalTrue++;
                         }
 
                         points.setText(attempts + " out of 6");
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
        newButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               if(attempts==6){
+                   totalGames++;
                    attempts=0;
                    points.setText("0 out of 6");
                    roundPlayed=0;
@@ -126,8 +129,19 @@ public class MainActivity extends AppCompatActivity {
                        numberTextViews[i].setText(String.valueOf((int) (Math.random() * 39 + 1)));
                        numberTextViews[i].setBackgroundColor(Color.WHITE);
                        numberTextViews[i].setTextColor(Color.BLACK);
-                   }
+
                }
+           }
+       });
+
+       score.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
+               intent.putExtra("TOTAL_GAMES", totalGames);
+               intent.putExtra("TOTAL_CORRECT_ATTEMPTS", totalTrue);
+
+               startActivity(intent);
            }
        });
 
