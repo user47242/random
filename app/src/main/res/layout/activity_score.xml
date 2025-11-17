@@ -9,13 +9,21 @@
     android:gravity="center"
     android:padding="20dp"
     tools:context=".ScoreActivity">
+    <TextView
+        android:id="@+id/playerNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        tools:text="Player Name" />
 
     <TextView
         android:id="@+id/gamesPlayed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:text="Total Games Played: "
+        android:text=" Your Total Games is: "
         android:textSize="24sp" />
 
     <TextView
@@ -31,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:textSize="24sp"
-        android:text="Total Correct Attempts: " />
+        android:text=" YourTotal Correct Attempts are : " />
 
     <TextView
         android:id="@+id/correct"

@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isRunning = false;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable numGenerateRun;
+    private TextView welcomePlayerTextView;
+    private String currentPlayerName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         start = findViewById(R.id.button);
         points = findViewById(R.id.points);
         score = findViewById(R.id.button3);
+
         numberTextViews[0].setText(String.valueOf((int) (Math.random() * 39 + 1)));
         numberTextViews[1].setText(String.valueOf((int) (Math.random() * 39 + 1)));
         numberTextViews[2].setText(String.valueOf((int) (Math.random() * 39 + 1)));
@@ -53,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
         start.setText("start");
         isRunning = false;
 
+        welcomePlayerTextView = findViewById(R.id.welcomePlayerTextView);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String playerName = extras.getString("PLAYER_NAME");
+            if (playerName != null && !playerName.isEmpty()) {
+                currentPlayerName = playerName;
+            }
+        }
 
         numGenerateRun = new Runnable() {
             @Override
@@ -140,10 +151,13 @@ public class MainActivity extends AppCompatActivity {
                Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
                intent.putExtra("TOTAL_GAMES", totalGames);
                intent.putExtra("TOTAL_CORRECT_ATTEMPTS", totalTrue);
+               intent.putExtra("PLAYER_NAME", currentPlayerName);
 
                startActivity(intent);
            }
        });
+
+
 
 
 
