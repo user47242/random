@@ -1,5 +1,6 @@
 package com.example.myapplication1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,12 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView ranNum,points;
     private TextView[] numberTextViews = new TextView[6];
-        private Button start,newButton,score  ;
+    private Button start,newButton,score,exit;
     private int attempts=0,roundPlayed=0,totalTrue=0,totalGames=1;
     private boolean isRunning = false;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable numGenerateRun;
-    private TextView welcomePlayerTextView;
     private String currentPlayerName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         start = findViewById(R.id.button);
         points = findViewById(R.id.points);
         score = findViewById(R.id.button3);
-
+        exit = findViewById(R.id.exitButton);
         numberTextViews[0].setText(String.valueOf((int) (Math.random() * 39 + 1)));
         numberTextViews[1].setText(String.valueOf((int) (Math.random() * 39 + 1)));
         numberTextViews[2].setText(String.valueOf((int) (Math.random() * 39 + 1)));
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         start.setText("start");
         isRunning = false;
 
-        welcomePlayerTextView = findViewById(R.id.welcomePlayerTextView);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String playerName = extras.getString("PLAYER_NAME");
@@ -75,6 +75,37 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                alertDialog.setTitle("Exit");
+                alertDialog.setMessage("are you sure you want to exit?");
+                alertDialog.setIcon(R.drawable.warning);
+                alertDialog.setCancelable(true);
+
+                alertDialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                        System.exit(0);
+                    }
+                });
+
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         start.setText("Play Again");
                         start.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
+                        start.setEnabled(false);
                     }
                 }
             }
@@ -130,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
        newButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+                   start.setEnabled(true);
                    totalGames++;
                    attempts=0;
                    points.setText("0 out of 6");
