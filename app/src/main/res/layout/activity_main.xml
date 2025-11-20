@@ -108,27 +108,38 @@
         android:gravity="center"
         android:text="x of 6" />
 
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/button2"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="30dp"
-        android:text="new" />
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:text="new"
+        android:textStyle="bold"/>
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            android:text="score"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/exitButton"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
-        android:layout_marginLeft="240dp"
-        android:text="Exit" />
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="20dp"
+        android:text="Exit"
+        android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="90dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="40dp"
-        android:text="score" />
+
 
 
 </LinearLayout>

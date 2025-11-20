@@ -162,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
        newButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-                   start.setEnabled(true);
+                   if(roundPlayed>5||start.getText().equals("Play Again"))
+                   {start.setEnabled(true);
                    totalGames++;
                    attempts=0;
                    points.setText("0 out of 6");
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                        numberTextViews[i].setText(String.valueOf((int) (Math.random() * 39 + 1)));
                        numberTextViews[i].setBackgroundColor(Color.WHITE);
                        numberTextViews[i].setTextColor(Color.BLACK);
-
+                   }
                }
            }
        });
