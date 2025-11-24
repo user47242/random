@@ -1,5 +1,6 @@
 package com.example.myapplication1;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -82,27 +83,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Dialog d = new Dialog(MainActivity.this);
+                d.setContentView(R.layout.custom_dialog);
+                if (d.getWindow() != null) {
+                    d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                }
+                Button btnYes = d.findViewById(R.id.btnYes);
+                Button btnNo = d.findViewById(R.id.btnNo);
 
-                alertDialog.setTitle("Exit");
-                alertDialog.setMessage("are you sure you want to exit?");
-                alertDialog.setIcon(R.drawable.warning);
-                alertDialog.setCancelable(true);
-
-                alertDialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                btnYes.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                        System.exit(0);
+                    public void onClick(View v) {
+                        d.dismiss();
+                        finishAffinity();
                     }
                 });
-
-                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                    public void onClick(View v) {
+                        d.dismiss();
                     }
                 });
-                alertDialog.show();
+                d.setCancelable(true);
+                d.show();
             }
         });
 
