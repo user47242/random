@@ -117,8 +117,8 @@
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_weight="1"
-        android:layout_marginLeft="10dp"
         android:text="new"
+        android:backgroundTint="#2196F3"
         android:textStyle="bold"/>
 
         <Button
@@ -127,9 +127,10 @@
             android:layout_height="70dp"
             android:layout_marginLeft="40dp"
             android:layout_weight="1"
+            android:backgroundTint="#2196F3"
             android:text="score"
-            android:textStyle="bold"
-            android:backgroundTint="#73AF6F" />
+
+            android:textStyle="bold" />
     </LinearLayout>
 
     <Button
@@ -139,6 +140,7 @@
         android:layout_marginLeft="175dp"
         android:layout_marginTop="20dp"
         android:text="Exit"
+        android:backgroundTint="#607D88"
         android:textStyle="bold"/>
 
 
