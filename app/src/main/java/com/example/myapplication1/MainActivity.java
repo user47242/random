@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isRunning = false;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable numGenerateRun;
-    private String currentPlayerName;
+    private String currentPlayerName, currentPlayerAge;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -61,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String playerName = extras.getString("PLAYER_NAME");
+            String playerAge = extras.getString("PLAYER_AGE");
             if (playerName != null && !playerName.isEmpty()) {
                 currentPlayerName = playerName;
+            }
+            if (playerAge != null && !playerAge.isEmpty()) {
+                currentPlayerAge = playerAge;
             }
         }
 
@@ -189,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                intent.putExtra("TOTAL_GAMES", totalGames);
                intent.putExtra("TOTAL_CORRECT_ATTEMPTS", totalTrue);
                intent.putExtra("PLAYER_NAME", currentPlayerName);
-
+               intent.putExtra("PLAYER_AGE", currentPlayerAge);
                startActivity(intent);
            }
        });

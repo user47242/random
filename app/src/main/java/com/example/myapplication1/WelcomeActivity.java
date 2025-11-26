@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    private EditText playerNameEditText;
+    private EditText playerNameEditText,age;
     private Button startGameButton;
 
     @Override
@@ -25,18 +25,22 @@ public class WelcomeActivity extends AppCompatActivity {
 
         playerNameEditText = findViewById(R.id.playerNameEditText);
         startGameButton = findViewById(R.id.startGameButton);
+        age = findViewById(R.id.editTextText);
 
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String playerName = playerNameEditText.getText().toString().trim();
+                String playerAge = age.getText().toString().trim();
 
 
-                if (playerName.isEmpty()) {
-                    Toast.makeText(WelcomeActivity.this, "Please enter your name", Toast.LENGTH_SHORT).show();
-                } else {
+                if (playerName.isEmpty() || playerAge.isEmpty()) {
+                    Toast.makeText(WelcomeActivity.this, "Please enter both Name and Age", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                     intent.putExtra("PLAYER_NAME", playerName);
+                    intent.putExtra("PLAYER_AGE", playerAge);
                     startActivity(intent);
                 }
             }

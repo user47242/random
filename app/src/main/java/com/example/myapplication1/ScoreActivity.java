@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class ScoreActivity extends AppCompatActivity {
     private TextView gamesPlayed;
     private TextView correctAttempts;
-    private TextView playerNameTextView;
+    private TextView playerNameTextView,playerAgeTextView;
     private Button back;
 
     @Override
@@ -25,6 +25,7 @@ public class ScoreActivity extends AppCompatActivity {
         gamesPlayed = findViewById(R.id.totalGames);
         correctAttempts = findViewById(R.id.correct);
         playerNameTextView = findViewById(R.id.playerNameTextView);
+        playerAgeTextView = findViewById(R.id.textView8);
         back = findViewById(R.id.button4);
         back.setOnClickListener(view -> finish());
 
@@ -35,12 +36,19 @@ public class ScoreActivity extends AppCompatActivity {
             int totalGames = intent.getIntExtra("TOTAL_GAMES", 0);
             int totalCorrect = intent.getIntExtra("TOTAL_CORRECT_ATTEMPTS", 0);
             String playerName = intent.getStringExtra("PLAYER_NAME");
+            String playerAge = intent.getStringExtra("PLAYER_AGE");
             gamesPlayed.setText(String.valueOf(totalGames));
             correctAttempts.setText(String.valueOf(totalCorrect));
             if (playerName != null && !playerName.isEmpty()) {
                 playerNameTextView.setText(playerName);
             } else {
                 playerNameTextView.setText(" ");
+            }
+            if (playerAge != null && !playerAge.isEmpty()) {
+                playerAgeTextView.setText(playerAge);
+            }
+            else {
+                playerAgeTextView.setText(" ");
             }
         }
 
